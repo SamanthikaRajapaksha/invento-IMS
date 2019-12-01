@@ -1,0 +1,45 @@
+<app-menu-title title="All users"> </app-menu-title>
+
+<ion-content>
+  <!-- Default Searchbar -->
+  <ion-searchbar
+    (ionChange)="filterUsers($event.target.value)"
+    debounce="500"
+  ></ion-searchbar>
+  <ion-grid>
+    <ion-card *ngFor="let employee of filteredEMployees | async">
+      <ion-row>
+        <ion-col [sizeXs]="2">
+          <img [src]="employee.img" alt="profile" />
+        </ion-col>
+        <ion-col [sizeXs]="10">
+          <div style="padding-bottom: 5px;">
+            <b>
+              {{ employee.firstname + employee.lastname }}
+            </b>
+          </div>
+          <div>
+            {{ employee.status }}
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-footer>
+        <ion-button
+          class="ion-float-right"
+          size="small"
+          *ngIf="employee.unblocked"
+          (click)="blockUser(employee.nic)"
+          >Block</ion-button
+        >
+        <ion-button
+          class="ion-float-right"
+          size="small"
+          *ngIf="!employee.unblocked"
+          (click)="blockUser(employee.nic)"
+          >UnBlock</ion-button
+        >
+        <ion-button class="ion-float-right" size="small">Update</ion-button>
+      </ion-footer>
+    </ion-card>
+  </ion-grid>
+</ion-content>

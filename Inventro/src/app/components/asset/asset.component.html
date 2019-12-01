@@ -1,0 +1,59 @@
+<mat-card style="margin-bottom: 8px;min-height: 22vh">
+  <ion-row class="row">
+    <ion-col sizeXs="12">
+      <div><b>Asset ID </b>: {{ asset.assetId }}</div>
+      <div><b>Type</b> : {{ asset.assetcategory }}</div>
+      <hr />
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Additional Information
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ion-grid>
+          <ion-row
+            *ngFor="let row of asset | keyvalue; let i = index"
+            [ngClass]="i % 2 == 0 ? 'dark' : 'light'"
+          >
+            <ion-col>{{ row.key }}</ion-col>
+            <ion-col>{{ row.value }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ion-row>
+
+  <ion-row style="padding: 10px">
+    <button
+      mat-raised-button
+      color="primary"
+      class="action-button"
+      (click)="bookAsset('request', asset)"
+      [hidden]="!isAuthorized('request')"
+    >
+      Request
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      class="action-button"
+      (click)="deleteAsset(asset.id)"
+      [hidden]="!isAuthorized('delete')"
+    >
+      Delete
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      class="action-button"
+      [hidden]="!isAuthorized('book')"
+      (click)="bookAsset('reserve', asset)"
+    >
+      Reserve
+    </button>
+  </ion-row>
+</mat-card>
